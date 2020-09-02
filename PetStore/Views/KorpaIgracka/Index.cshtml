@@ -1,0 +1,88 @@
+﻿@model PetStore.Models.Kupovina
+
+@{
+    ViewBag.Title = "Korpa";
+}
+
+<h2>Korpa</h2>
+
+@if (ViewBag.KorpaIgracke != null)
+{
+    <table class="table table-bordered">
+        <tr>
+            <td><b>Igračka</b></td>
+            <td><b>Cijena po komadu (KM)</b></td>
+            <td><b>Broj komada</b></td>
+            <td><b>Cijena (KM)</b></td>
+        </tr>
+
+        @foreach (var item in ViewBag.KorpaIgracke as IEnumerable<PetStore.Models.KorpaIgracka>)
+        {
+            <tr>
+                <td>@item.Igracka.Opis</td>
+                <td>@item.Igracka.Cijena</td>
+                <td>
+                    @using (Html.BeginForm("AzurirajBrojKomada", "KorpaIgracka", new { id = item.Id }, FormMethod.Post))
+                    {
+                        @Html.TextBox("brKomada", item.BrojKomada, new { type = "number", min = "1" })
+                        <input type="submit" class="btn-success" value="Ažuriraj" />
+                    }
+                </td>
+                <td>@(item.Igracka.Cijena * item.BrojKomada)</td>
+                <td>@Html.ActionLink("Ukloni", "Obrisi", new { controller = "KorpaIgracka", id = item.Id })</td>
+
+            </tr>
+            }
+
+
+    </table>
+}
+else
+{
+    <p>
+        <h5>Korpa je prazna.</h5>
+    </p>
+}
+@if (ViewBag.UkupnaCijena != null)
+{
+    <p>
+        <b>Ukupna cijena: @ViewBag.UkupnaCijena</b>
+    </p>
+}
+
+@if (ViewBag.KorpaIgracke != null)
+{
+    <hr />
+    <div>
+        <p>
+            <h5 style="color:green">@TempData["Poruka"]</h5>
+        </p>
+        <h2>Podaci za kupovinu</h2>
+        @using (Html.BeginForm("Kupi", "KorpaIgracka", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.KupacIme, "Ime")
+                @Html.TextBoxFor(model => model.KupacIme, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(model => model.KupacIme, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.KupacPrezime, "Prezime")
+                @Html.TextBoxFor(model => model.KupacPrezime, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(model => model.KupacPrezime, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Adresa, "Adresa")
+                @Html.TextBoxFor(model => model.Adresa, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(model => model.Adresa, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.BrojKreditneKartice, "Broj kreditne kartice")
+                @Html.TextBoxFor(model => model.BrojKreditneKartice, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(model => model.BrojKreditneKartice, "", new { @class = "text-danger" })
+            </div>
+            <input type="submit" class="btn btn-success" value="Završi kupovinu" />
+            @Html.ActionLink("Kupi još", "Index", "Igracka")
+        }
+    </div>
+}
+

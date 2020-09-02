@@ -1,0 +1,27 @@
+﻿@model PetStore.Models.KorpaIgracka
+@{
+    ViewBag.Title = "Dodaj";
+}
+
+<h2>Dodaj u korpu</h2>
+
+<div>
+    <p>
+        <b>Igračka:</b> @ViewBag.Opis
+    </p>
+    <p>
+        <b>Cijena (KM):</b> @ViewBag.Cijena
+    </p>
+    @using (Html.BeginForm("Dodaj", "KorpaIgracka", FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.BrojKomada, "Broj komada")
+            @Html.TextBoxFor(model => model.BrojKomada, new { @class = "form-control", type="number", required="required", min="1", value="1"})
+            @Html.ValidationMessageFor(model => model.BrojKomada, "", new { @class = "text-danger" })
+        </div>
+        <input type="submit" class="btn btn-success" value="Dodaj" />
+        @Html.ActionLink("Odustani", "Index", "Igracka")
+    }
+
+</div>
+

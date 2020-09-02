@@ -1,0 +1,30 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "Kupovina";
+}
+
+<h2>Sve kupovine</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <td><b>Ime i prezime</b></td>
+        <td><b>Adresa</b></td>
+        <td><b>Broj kreditne kartice</b></td>
+    </tr>
+
+    @foreach (var item in ViewBag.Kupovine as IEnumerable<PetStore.Models.Kupovina>)
+    {
+        <tr>
+            <td>@item.KupacIme @item.KupacPrezime</td>
+            <td>@item.Adresa</td>
+            <td>@item.BrojKreditneKartice</td>
+            <td>@Html.ActionLink("Artikli", "PregledArtikala", new { controller = "Kupovina", id = item.Id })</td>
+            <td>@Html.ActionLink("Obriši", "Obrisi", new { controller = "Kupovina", id = item.Id })</td>
+        </tr>
+    }
+</table>
+@Html.ActionLink("Početna stranica", "Index", "Igracka")
+<p>
+    @Html.PagedListPager(ViewBag.Kupovine as IPagedList<PetStore.Models.Kupovina>, page => Url.Action("Index", new { page, pageSize = ViewBag.Kupovine.PageSize }))
+</p>

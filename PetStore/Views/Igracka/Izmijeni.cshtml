@@ -1,0 +1,26 @@
+﻿@model PetStore.Models.Igracka
+@{
+    ViewBag.Title = "Izmijeni podatke o igrački";
+}
+
+<h2>Igračka br. @Model.Id</h2>
+
+<div>
+    @using (Html.BeginForm("Izmijeni", "Igracka", FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Opis)
+            @Html.TextBoxFor(model => model.Opis, Model.Opis, new { @class = "form-control", required = "required" })
+            @Html.ValidationMessageFor(model => model.Opis, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cijena, "Cijena (KM)")
+            @Html.TextBoxFor(model => model.Cijena, new { @class = "form-control", type = "number", required = "required" })
+            @Html.ValidationMessageFor(model => model.Cijena, "", new { @class = "text-danger" })
+        </div>
+        <input type="submit" class="btn btn-success" value="Sačuvaj" />
+        @Html.ActionLink("Nazad", "Index", "Igracka")
+    }
+
+</div>

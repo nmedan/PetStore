@@ -1,0 +1,32 @@
+﻿@model IEnumerable<PetStore.Models.KorpaIgracka>
+@{
+    ViewBag.Title = "Pregled artikala";
+}
+
+<h2>Kupovina br. @ViewBag.KupovinaId</h2>
+
+<h4>Kupac: @ViewBag.Kupac</h4>
+
+<table class="table table-bordered">
+    <tr>
+        <td><b>Igračka</b></td>
+        <td><b>Cijena po komadu (KM)</b></td>
+        <td><b>Broj komada</b></td>
+        <td><b>Cijena (KM)</b></td>
+    </tr>
+
+    @foreach (var item in @Model)
+    {
+        <tr>
+
+            <td>@item.Igracka.Opis</td>
+            <td>@item.Igracka.Cijena</td>
+            <td>@item.BrojKomada</td>
+            <td>@(item.Igracka.Cijena*item.BrojKomada)</td>
+        </tr>
+    }
+</table>
+<p>
+    <b>Ukupna cijena: @ViewBag.UkupnaCijena</b>
+</p>
+@Html.ActionLink("Nazad", "Index", "Kupovina")

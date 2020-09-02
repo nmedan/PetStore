@@ -1,0 +1,53 @@
+﻿@model PetStore.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Registruj se";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type="email", required = "required" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, "Lozinka")
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", id = "password", required = "required", minlength = "6" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, "Potvrdi lozinku")
+            @Html.PasswordFor(m => m.ConfirmPassword, new
+            {
+                @class = "form-control",
+                a = "aaa",
+                required = "required",
+                oninput = "provjeri(this)"
+            })
+            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-success" value="Registruj se" />
+        </div>
+        <script language="javascript" type="text/javascript">
+            function provjeri(input) {
+                if (input.value != document.getElementById('password').value) {
+                    input.setCustomValidity("The passwords don't match");
+                }
+                else {
+                    input.setCustomValidity("");
+                }
+            }
+        </script>
+    }
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
