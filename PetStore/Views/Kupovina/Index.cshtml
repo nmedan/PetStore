@@ -19,8 +19,10 @@
             <td>@item.KupacIme @item.KupacPrezime</td>
             <td>@item.Adresa</td>
             <td>@item.BrojKreditneKartice</td>
-            <td>@Html.ActionLink("Artikli", "PregledArtikala", new { controller = "Kupovina", id = item.Id })</td>
-            <td>@Html.ActionLink("Obriši", "Obrisi", new { controller = "Kupovina", id = item.Id })</td>
+            <td>
+                @Html.ActionLink("Artikli", "PregledArtikala", new { controller = "Kupovina", id = item.Id })
+                | @Html.ActionLink("Obriši", "Obrisi", new { controller = "Kupovina", id = item.Id })
+            </td>
         </tr>
     }
 </table>

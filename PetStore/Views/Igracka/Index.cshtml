@@ -19,29 +19,31 @@
         <td><b>Opis</b></td>
         <td><b>Cijena (KM)</b></td>
     </tr>
-    
+
     @foreach (var item in ViewBag.Igracke as IEnumerable<PetStore.Models.Igracka>)
     {
         <tr>
             <td>@item.Opis</td>
             <td>@item.Cijena</td>
-            <td>@Html.ActionLink("Dodaj u korpu", "Dodaj", new { controller = "KorpaIgracka", id = item.Id })</td>
             @if (Request.IsAuthenticated)
             {
                 <td>
-                    @Html.ActionLink("Izmijeni", "Izmijeni", new { controller = "Igracka", id = item.Id })
+                    @Html.ActionLink("Dodaj u korpu", "Dodaj", new { controller = "KorpaIgracka", id = item.Id })
+                    | @Html.ActionLink("Izmijeni", "Izmijeni", new { controller = "Igracka", id = item.Id })
+                    | @Html.ActionLink("Obriši", "Obrisi", new { controller = "Igracka", id = item.Id })
                 </td>
+            }
+            else
+            {
                 <td>
-                    @Html.ActionLink("Obriši", "Obrisi", new { controller = "Igracka", id = item.Id })
+                    @Html.ActionLink("Dodaj u korpu", "Dodaj", new { controller = "KorpaIgracka", id = item.Id })
                 </td>
             }
         </tr>
-
-
     }
 </table>
 <p>
-    @Html.PagedListPager(ViewBag.Igracke as IPagedList<PetStore.Models.Igracka>, page => Url.Action("Index", new { page, pageSize = ViewBag.Igracke.PageSize, filter = ViewBag.filter}))
+    @Html.PagedListPager(ViewBag.Igracke as IPagedList<PetStore.Models.Igracka>, page => Url.Action("Index", new { page, pageSize = ViewBag.Igracke.PageSize, filter = ViewBag.filter }))
 </p>
 @if (Request.IsAuthenticated)
 {
